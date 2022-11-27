@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 import os,sys
 import re
+
+print('\n\tHere is the start of step 3.\n')
+
 j8=0
 while j8==0:
+#A screening process very similar to step 2.
   NUM=0
   p=0
   while p==0:
@@ -91,6 +95,7 @@ while j8==0:
     loop.write(ss_name)
     loop.close()
   
+  #After finishing the filter, loop through the patamatmotifs program
   loop=open('loop_select_select.txt','r')
   whole=loop.read()
   wholelist_re=whole.split(">")
@@ -105,7 +110,7 @@ while j8==0:
     patcommand="patmatmotifs -sequence loop.txt -outfile "+ name[0] +".txt -auto"
     os.system(patcommand)
   
-  ##out1
+  ##output1:
   print("The names of the motifs contained in each protein sequence are as follows:")
   dic1={}
   for i in wholelist_name:
@@ -126,7 +131,7 @@ while j8==0:
     print(op)
     wholename=wholename+dic1[i]
   
-  ##out2
+  ##output2
   print("\nNumber of occurrences of each motif in all your searches:")
   i=0
   allname=[]
@@ -137,14 +142,16 @@ while j8==0:
       i=wholename.count(j)
     if wholename.count(j)==len(name):
       allname.append(j)
+  #output3    
   if i == len(name):
     for a in allname:
       print("\nmotifi " + a + " is present in all search sequences.")
   else: 
     print("\nThere is no common motif in all the search sequences.")
   
-  ##out4
+  ##output4:After finishing the filter, loop through the patamatmotifs program
   dicc={}
+    #Building a motif Dictionary
   for i in list(set(wholename)):
     dicc[i]=''
     for j in name:
@@ -160,7 +167,7 @@ while j8==0:
           dicc[i]=dicc[i]+j+"\n"+'Length = '+select_qll +"\n========================\n"
   
   
-  
+    #The motif information of interest to the customer is invoked from the motif dictionary
   pp=0
   while pp==0:
     p=0
@@ -176,6 +183,7 @@ while j8==0:
       print(select_choice)
       print(dicc[select_choice])
   
+  #If you are not satisfied with the result, you can redo the second part.
   p=0
   while p==0:
     jj=input("Do you want to try again?(Enter \"YES\" or \"NO\")\n\t")
@@ -190,7 +198,7 @@ while j8==0:
 
     
 print("Good Job!\nThe program will proceed to the fourth part.")
-
+os.system("./step4.py")
 
 
 

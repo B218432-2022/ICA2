@@ -2,23 +2,25 @@
 
 import os,sys
 
-print("\n\tThis is the beginning of the second part of the program.\n")
-print(" SOMETHING ")
+print('\n\tHere is the start of step 2.\n')
+#some introductions
+print(" In carrying out subsequent steps of this procedure, the selection of too much sequence information may result in poor biological significance or slow running of the program. ")
+
+#Whether screening is required
 print("Do you want to select a certain number of sequences in your search for the second step or do you want to use your entire search results for the second step? ")
 first=input("(type \"SELECT\" to start the selection, type anything else to skip the selection)\n\t")
 NUM=2
 
 if first=="SELECT":
   NUM=1
-  
+
+#Filter mode selection  
 choice=''
 while NUM==1:
-  choice=input("Search by species name please enter \"SN\".\nSearch by protein ID please enter \"PID\"\nTo search by sequence similarity to a template sequence please enter \"SST\".\n\t")
+  choice=input("Search by species name please enter \"SN\".\nSearch by protein ID please enter \"PID\"\n\t")
   if choice=='SN':
     NUM = 0
   if choice=='PID' :
-    NUM = 0
-  if choice=='SST' :
     NUM = 0
   else:
     print('\tTYPO!')
@@ -27,11 +29,12 @@ p=''
 
 while NUM==0:
   #######
+  #Filtering by species name
   if choice == 'SN':
     loop=open("loop_speices.txt","r")
     lines=loop.readlines()
     loop_sp=[]
-    
+    #Extracts the selected string from the file
     for i in lines:
       j=i.split("[")
       k=j[-1].split("]")
@@ -47,6 +50,7 @@ while NUM==0:
       count+=1
       print(str(count)+'\t'+i)
     
+    #Users can enter the names of the desired species one by one to complete the filter.
     p='YES' 
     while p=='YES':  
       count=0
@@ -87,6 +91,7 @@ while NUM==0:
 
 
   #######
+  #Filtering by protein ID
   if choice =="PID":
     loop=open("loop_speices.txt","r")
     lines=loop.readlines()
@@ -107,6 +112,7 @@ while NUM==0:
       count+=1
       print(str(count)+"\t"+i)
       
+    #Users can enter the desired IDs one by one to complete the filter. 
     p='YES'
     while p=='YES':
       count=0
@@ -146,11 +152,9 @@ while NUM==0:
           s_name.append(i)
       NUM=1
     
-  #if choice == "SST":
-    
 #########
 
-
+#Import the user filtered (or not) sequence into a document.
 if NUM==1:
   ss_name='>'+'>'.join(s_name)
 if NUM==2:
@@ -160,8 +164,11 @@ if NUM==2:
 loop=open('loop_select.txt','w')
 loop.write(ss_name)
 loop.close()
+#Perform clustering
 ccommand="clustalo -i loop_select.txt -o loop_clus.txt -v --force"
 os.system(ccommand)
+
+#Perform user changeable poltcon.
 p=0
 while p==0:
   while True:
@@ -190,6 +197,6 @@ while p==0:
       pp=1
     if fp!="YES" and fp!="NO":
       print("typo")
-print('GoodJob!\nThe program will proceed to the Third part.')      
-      
+print('GoodJob!\nThe program will proceed to the Third part.')     
+os.system("./step3.py")
     

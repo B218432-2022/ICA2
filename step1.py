@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import os,sys,subprocess
+print('\n\tHere is the start of step 1.\n')
 
 p=1
 
@@ -14,7 +15,7 @@ while p==1:
   profam=input("Please enter the name of the protein family you wish to search for:\n\t").upper()
   print("Check!")
   
-  #input taxgp
+  #usr input taxgp
   taxgp=[""]
   i=0
   #######1.1.1
@@ -27,11 +28,11 @@ while p==1:
     i+=1
   print("Check!")
   
-  #query try
+  #try query, judge by different criteria 
   qcommand='esearch -db protein -query '+"\'"+ ' AND '.join(taxgp)+' AND '+profam+'[PROT]'+"\'"+" > loop1.txt"
   os.system(qcommand)
   
-  #choice of count
+  #count judgement
   count=0
   loop=open("loop1.txt","r")
   lines=loop.readlines()
@@ -63,10 +64,10 @@ while p==1:
  #get fastafile
  qcommand='esearch -db protein -query '+"\'"+ ' AND '.join(taxgp)+' AND '+profam+'[PROT]'+"\'"+" | efetch -format fasta"+" > loop_fasta.txt"
  os.system(qcommand)
- 
  lcommand="grep '>' loop_fasta.txt > loop_speices.txt"
  os.system(lcommand)
- #Species count
+ 
+ #Species count judgement
  loop=open("loop_speices.txt","r")
  lines=loop.readlines()
  loop_sp=[""]
@@ -115,3 +116,4 @@ while p==1:
    print("\n\tGOOD JOB!\nThe program will proceed to the second part.")
    break
 #######
+os.system("./step2.py")
